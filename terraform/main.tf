@@ -9,9 +9,9 @@ terraform {
 }
 
 provider "yandex" {
-  service_account_key_file = "/home/arnsdx/Documents/git/SF/SF_B5/yc_key.json"
-  cloud_id                 = "b1g8turf4kbcqi6frgkf"
-  folder_id                = "b1gf0fhbe8jrl1bct4gn"
+  service_account_key_file = "path_to_key_file"
+  cloud_id                 = "cloud_id"
+  folder_id                = "folder_id"
   zone                     = "ru-central1-a"
 }
 
@@ -53,7 +53,7 @@ resource "yandex_compute_instance" "master" {
   }
   metadata = {
     ssh-keys  = "arnsdx-admin:${file("~/.ssh/id_yandex.pub")}"
-    user-data = "#cloud-config\ndatasource:\n Ec2:\n  strct_id: false\nssh_pwauth: no\nusers:\n- name: arnsdx-admin\n  sudo: ALL=(ALL) NOPASSWD:ALL\n  shell: /bin/bash\n  ssh_authorized_keys:\n  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDE/bWEwub/9IXYtbHyFp8GBlOQSvCPG7OPalfuw/791ETWkmShNrUM5Edo7Cjzl5+FhqzM+RJj/Tvve0V1CLaQEKkgmONJ92PrZaMB+F1p/0651KOvk6+z7X++ulb9Cz4tC3zeW2Yw7Lb9ShAQlWN+7Z9lQqjBor5SaE/QKYssGafIIZaafupsg7WuOqg22+5SwyrgM6QKWvo/3dAkhafqR62XERVavWt2/g2UdUYkNVbS3r7ZsWgf+W99GtH4IFHczKEPq72GawCSz75j6fth2H5Sn1KRsw2dwxcbC7RKbUAjejleoncIkNts6MlGFRWq66sLUAOyWZbJUwf7ir1qXWJdPreOtkoSZaQuJchSoQP4Wmr74wFy19h64R7ZV7yoEr02B5wWP+i8TVoD8No33XKEYTjUAxhKcdwddfDVtAVUdj+dIVkH5Qr1bg6JgSnwSuId3iv0WN5yFvMbdy9yK2/SrCOQN2ChKVV37/r6JxCD04JJnw4wxEIDAjy4GX1Ea6QCisQr7orOjS14gTVWjYYeQCSpMoChmYMTjPpt/h1Pu+dadnxQU1bWkPzeK7TBBLrokf5w549CM1ng7sw2482gr4OFEjMM+W/X3jjpkQbgtExBAbAjAHz8EJQVXyHJRabC/DBBIXGOn+EcMeUsC01mvE86KOwPFBb0ZX0Z7w==\n#cloud-config\nruncmd: []"
+    user-data = "#cloud-config\ndatasource:\n Ec2:\n  strct_id: false\nssh_pwauth: no\nusers:\n- name: admin_account\n  sudo: ALL=(ALL) NOPASSWD:ALL\n  shell: /bin/bash\n  ssh_authorized_keys:\n  - ssh-rsa_pub_key\n#cloud-config\nruncmd: []"
   }
 
   timeouts {
@@ -102,7 +102,7 @@ resource "yandex_compute_instance" "worker-2" {
 
   resources {
     cores  = 2
-    memory = 2
+    memory = 8
   }
 
   scheduling_policy {
